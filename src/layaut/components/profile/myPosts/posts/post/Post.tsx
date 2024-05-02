@@ -1,20 +1,16 @@
 import React from 'react';
 import styled from "styled-components";
+import {PostTypeData} from "../../MyPosts";
 
 
-type PostPropsType = {
-    message: string
-    likesCount: number
-}
-export const Post = ({message, likesCount}: PostPropsType) => {
+export const Post = (props: PostTypeData) => {
     return (
         <>
             <StylesPost>
                 <ImgTeg src='https://www.svgrepo.com/show/492569/smile-1.svg'/>
-                {message}
-
+                {props.message}
             </StylesPost>
-            <span>Like{likesCount}</span>
+            <span>Like</span>{props.likesCount}
         </>
 
     );
@@ -26,5 +22,5 @@ const StylesPost = styled.div`
 `
 const ImgTeg = styled.img`
     width: 30px;
-    padding:0 20px 20px 20px;
+    padding: 0 20px 20px 20px;
 `
