@@ -1,8 +1,17 @@
 import React from 'react';
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import {Friends} from "../friends/Friends";
+import {DialogType} from "../../assets/Types";
+import {UsersType} from "../../../model/users-reducer/users-reduser";
+// import {StateUsersType} from "../../../model/users-reducer/users-reduser";
 
-export const Navigation = () => {
+type NavigationType={
+    // dialogs:StateUsersType
+    dialogs:UsersType[]
+    removeUser: (id: string)=>void
+}
+export const Navigation = ({dialogs, removeUser}:NavigationType) => {
     return (
         <StylesNavigation>
 
@@ -13,6 +22,7 @@ export const Navigation = () => {
                 <li><NavLink to="/music">Music</NavLink></li>
                 <li><NavLink to="/settings">Settings</NavLink></li>
             </ul>
+            <Friends  dialogs={dialogs} removeUser={removeUser}/>
 
         </StylesNavigation>
     );
@@ -41,7 +51,7 @@ const StylesNavigation = styled.nav`
                 &.active {
 
                     color: #1c1d1e;
-                    font-size: 25px;
+                    font-size: 20px;
 
                 }
             }

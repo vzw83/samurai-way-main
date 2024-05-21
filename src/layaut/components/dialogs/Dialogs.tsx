@@ -1,50 +1,68 @@
 import styled from "styled-components";
-import {NavLink} from "react-router-dom";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
+import {StateMessageType} from "../../../model/messge-reducer/message-reducer";
+import {UsersType} from "../../../model/users-reducer/users-reduser";
+import {useParams} from "react-router-dom";
 
 
-export type DialogItemPropsType = {
-    id?: string
-    name?: string
+// type DialogsPropsType = {
+//     dialogs: StateUsersType
+//     messagesState: StateMessageType
+//     addMessage: (value: string) => void
+//     updateMessage: (id: string, newMessage: string) => void
+//
+// }
+type DialogsPropsType = {
+    dialogs: UsersType[]
+    messagesState: StateMessageType
+    addMessage: (userId: string,value: string) => void
+    updateMessage: (id: string, newMessage: string) => void
+
 }
 
-export type MessagePropsType = {
-    message: string
-}
+export const Dialogs = (props: DialogsPropsType) => {
+    // const dialogsElement = props.dialogs.users.map(dialog =>
+    const dialogsElement = props.dialogs.map(dialog =>
+        <DialogItem avatar={dialog.avatar} key={dialog.id} name={dialog.name} isFriends={dialog.isFriend} id={dialog.id}
+                    addMessage={props.addMessage}/>
+    )
+    let {id} = useParams()
+
+    // const messagesElement = props.messages.map(message =>
+    //     <Message key={message.id} message={message.message}/>
+    // )
+
+    // const messagesElement = props.messagesState.messages.map(message =>
+    //     <Message id={message.id} updateMessage={props.updateMessage} key={message.id} message={message.message}/>
+    // )
+    console.log(id)
 
 
-const dialogs: DialogItemPropsType[] = [
-    {name: "Fedoryhc", id: "1"},
-    {name: "Vovich", id: "2"},
-    {name: "Temych", id: "3"},
-    {name: "Igor", id: "4"},
-]
-
-
-const messages = [
-    {message: "Привет", id: "1"},
-    {message: "Мое первое сообщение!!", id: "2"},
-    {message: "yooo!!!", id: "3"},
-]
-
-
-const dialogsElement = dialogs.map(dialog =>
-    <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>
-)
-const messagesElement = messages.map(message =>
-    <Message key={message.id} message={message.message}/>
-)
-
-export const Dialogs = () => {
+    const onHandlerClick = (userId: string, value: string) => {
+        props.addMessage(userId, value)
+    }
+    // console.log(onHandlerClick)
     return (
         <StylesDialogs>
+
             <DialogsWrapper>
                 {dialogsElement}
             </DialogsWrapper>
 
             <MessagesWrapper>
-                {messagesElement}
+                {/*<AddForm onHandlerClick={onHandlerClick} title={"add message"}/>*/}
+                {id
+                    ? props.messagesState[id].map(message =>
+                            <Message id={message.id}
+                                     updateMessage={props.updateMessage}
+                                     key={message.id}
+                                     message={message.message}
+                            />
+                        )
+                    : <span>Выбери диалог</span>
+                }
+
             </MessagesWrapper>
         </StylesDialogs>
     );
@@ -72,11 +90,11 @@ const MessagesWrapper = styled.div`
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 `
 
-const MessageText = styled.div`
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #f5f5f5;
-`
+// const MessageText = styled.div`
+//     padding: 10px;
+//     border-radius: 5px;
+//     margin-bottom: 10px;
+//     background-color: #f5f5f5;
+// `
 
 

@@ -2,21 +2,23 @@ import React from 'react';
 import styled from "styled-components";
 import {MyPosts} from "./myPosts/MyPosts";
 import {ProfileInfo} from "./profileInfo/ProfileInfo";
+import {ProfilePageType} from "../../assets/Types";
 
 
 
+type ProfilePropsType = {
+    profilePage: ProfilePageType
+    addPost: (postText: string) =>void
+    updatePostText: (id: string, newMessage: string) =>void
+}
+export const Profile = (props: ProfilePropsType) => {
 
-const postData = [
-    {id: "1", message: "Привеет, как дела!?", likesCount: "1"},
-    {id: "2", message: "Это первый мой пост", likesCount: "32"},
-    {id: "3", message: "Летим!!!", likesCount: "33"},
-]
 
-export const Profile = () => {
     return (
         <StylesProfile>
+
             <ProfileInfo/>
-            <MyPosts posts={postData}/>
+            <MyPosts updatePostText={props.updatePostText} posts={props.profilePage.posts} addPost={props.addPost} />
         </StylesProfile>
     );
 };

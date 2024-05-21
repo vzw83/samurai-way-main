@@ -1,17 +1,31 @@
 import styled from "styled-components";
-
-import {MessagePropsType} from "../Dialogs";
-
-
+import {useState} from "react";
+import {EditableTextElement} from "../../EditableTextElement";
 
 
-export const Message = ({message}: MessagePropsType) => {
-    return (
-        <MessageText>{message}</MessageText>
-    )
+type MessagePropsType = {
+    id: string
+    message: string
+    updateMessage: (id: string, newMessage: string) => void
 }
 
 
+export const Message = ({message, updateMessage, id}: MessagePropsType) => {
+
+    const updateMessageHandler = (newMessage: string) => {
+        updateMessage(id, newMessage)
+    }
+
+    return (
+        <>
+
+            {/*<MessageText>{message}</MessageText>*/}
+            <MessageText >
+                <EditableTextElement value={message} onChange={updateMessageHandler}/>
+            </MessageText>
+        </>
+    )
+}
 
 
 const MessageText = styled.div`

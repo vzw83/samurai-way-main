@@ -36,3 +36,8 @@
 /*    transform: rotate(360deg);*/
 /*  }*/
 /*}*/
+
+.postsWrapper{
+    height: 298px;
+    overflow-y: auto;
+}
